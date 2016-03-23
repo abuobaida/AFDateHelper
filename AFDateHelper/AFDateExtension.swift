@@ -49,6 +49,10 @@ public enum TimeZone {
     case Local, UTC
 }
 
+public enum Locale {
+    case CurrentLocale, English
+}
+
 public extension NSDate {
     
     // MARK: Intervals In Seconds
@@ -747,10 +751,11 @@ public extension NSDate {
     - Parameter timeZone: The time zone to interpret the date can be .Local, .UTC applies to Custom format only
     - Returns The date string representation
     */
-    func toString(format format: DateFormat, timeZone: TimeZone = .Local) -> String
+    func toString(format format: DateFormat, timeZone: TimeZone = .Local, locale: Locale = .English) -> String
     {
         var dateFormat: String
         let zone: NSTimeZone
+        let appliedLocale: NSLocale
         switch format {
         case .DotNet:
             let offset = NSTimeZone.defaultTimeZone().secondsFromGMT / 3600
@@ -775,7 +780,14 @@ public extension NSDate {
             dateFormat = string
         }
         
-        let formatter = NSDate.formatter(format: dateFormat, timeZone: zone)
+        switch locale {
+        case .CurrentLocale:
+            appliedLocale = NSLocale.currentLocale()
+        case .English:
+            appliedLocale = NSLocale(localeIdentifier: "en_US")
+        }
+        
+        let formatter = NSDate.formatter(format: dateFormat, timeZone: zone, locale: appliedLocale)
         return formatter.stringFromDate(self)
     }
     
