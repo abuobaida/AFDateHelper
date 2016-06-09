@@ -50,7 +50,7 @@ public enum TimeZone {
 }
 
 public enum Locale {
-    case CurrentLocale, English
+    case CurrentLocale, English, Arabic
 }
 
 public extension NSDate {
@@ -785,6 +785,8 @@ public extension NSDate {
             appliedLocale = NSLocale.currentLocale()
         case .English:
             appliedLocale = NSLocale(localeIdentifier: "en_US")
+        case .Arabic:
+            appliedLocale = NSLocale(localeIdentifier: "ar_SA")
         }
         
         let formatter = NSDate.formatter(format: dateFormat, timeZone: zone, locale: appliedLocale)
