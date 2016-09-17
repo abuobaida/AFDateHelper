@@ -9,25 +9,25 @@
 
 Pod::Spec.new do |s|
   s.name             = "AFDateHelper"
-  s.version          = "3.1.2"
-  s.summary          = "NSDate Extension for Swift 2.0"
+  s.version          = "3.5.3"
+  s.summary          = "Date Extension for Swift 3.0"
   s.description      = <<-DESC
                        Extension for NSDate in Swift for creating, modifying or comparing dates.
                        DESC
-  s.homepage         = "https://github.com/melvitax/AFDateHelper"
-  s.screenshots     = "https://raw.githubusercontent.com/melvitax/AFDateHelper/master/Screenshot.png"
+  s.homepage         = "https://github.com/melvitax/DateHelper"
+  s.screenshots      = "https://raw.githubusercontent.com/melvitax/DateHelper/master/Screenshot.png"
   s.license          = 'MIT'
-  s.author           = { "Melvin Rivera" => "melvin@allforces.com" }
-  s.source           = { :git => "https://github.com/melvitax/AFDateHelper.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/melvitax'
+  s.author           = { "Melvin Rivera" => "melvitax@gmail.com" }
+  s.source           = { :git => "https://github.com/melvitax/DateHelper.git", :tag => s.version.to_s }
+  s.social_media_url = 'https://twitter.com/melvitax'
 
-  s.platform     = :ios, '8.0'
-  s.requires_arc = true
+  s.platforms     = { :ios => '8.4', :tvos => '9.0',  :watchos => '2.0' }
+  s.ios.deployment_target = "8.4"
+  s.watchos.deployment_target = "2.0"
+  s.tvos.deployment_target = "9.0"
 
-  s.source_files = 'AFDateHelper/**/*'
-  #s.resource_bundles = {}
+  s.xcconfig = { 'SWIFT_VERSION' => '3.0' }
 
-  # s.public_header_files
-  # s.frameworks
-  # s.dependency 
+s.source_files = "Sources/**/*.{h,swift}"
+
 end
