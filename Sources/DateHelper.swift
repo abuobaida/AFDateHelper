@@ -19,9 +19,10 @@ public extension Date {
      
         - Returns: A Date() object if successfully converted from string or nil.
     */
-    init?(fromString string: String, format:DateFormatType, timeZone: TimeZoneType = .local, locale: Locale = Foundation.Locale.current) {
+    init(fromString string: String, format:DateFormatType, timeZone: TimeZoneType = .local, locale: Locale = Foundation.Locale.current) {
         guard !string.isEmpty else {
-            return nil
+            self.init()
+            return
         }
         var string = string
         switch format {
@@ -29,7 +30,8 @@ public extension Date {
                 let pattern = "\\\\?/Date\\((\\d+)(([+-]\\d{2})(\\d{2}))?\\)\\\\?/"
                 let regex = try! NSRegularExpression(pattern: pattern)
                 guard let match = regex.firstMatch(in: string, range: NSRange(location: 0, length: string.utf16.count)) else {
-                    return nil
+                    self.init()
+                    return
                 }
                  #if swift(>=4.0)
                 let dateString = (string as NSString).substring(with: match.range(at: 1))
@@ -48,7 +50,8 @@ public extension Date {
         }
         let formatter = Date.cachedFormatter(format.stringFormat, timeZone: timeZone.timeZone, locale: locale)
         guard let date = formatter.date(from: string) else {
-            return nil
+            self.init()
+            return
         }
         self.init(timeInterval:0, since:date)
     }
@@ -98,7 +101,7 @@ public extension Date {
     
     
     /// Converts the date to string based on a date format, optional timezone and optional locale.
-    func toString(format: DateFormatType, timeZone: TimeZoneType = .local, locale: Locale = Locale.current) -> String {
+    func toString(_ format: DateFormatType, timeZone: TimeZoneType = .local, locale: Locale = Locale(identifier: "en")) -> String {
         switch format {
         case .dotNet:
             let offset = Foundation.NSTimeZone.default.secondsFromGMT() / 3600
